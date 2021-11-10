@@ -43,6 +43,10 @@ function showMainMenu() {
   }
 }
 
+/**
+ * Gives menu of shapes. Allows user to select the item they way
+ * and input the quantity they want to buy.
+ */
 function addItemToCart() {
     letUserSelectItem();
     letUserSelectQuantity();
@@ -75,10 +79,15 @@ function letUserSelectQuantity() {
     console.log(''); //extra empty line for revisiting
 }
 
+/**
+ * Prompts the user to select an item to remove from cart.
+ * 
+ */
 function removeItemFromCart() {
     console.log(`Select an item to be removed from the cart.
   `);
 
+    //Display shopping cart contents
     for (let i = 0; i < shopping_cart.length; i++) {
         console.log(i+": "+shopping_cart[i].getName());
     }
@@ -92,6 +101,9 @@ function removeItemFromCart() {
     console.log(''); //extra empty line for revisiting
 }
 
+/**
+ * Dispalys all items in the cart with respective name, price, description, and quantity
+ */
 function viewItemsInCart() {
     for (let i = 0; i < shopping_cart.length; i++) {
         console.log("");
@@ -102,6 +114,9 @@ function viewItemsInCart() {
     }
 }
 
+/**
+ * Calculates and displays the total price for the shopping cart
+ */
 function viewCartTotal() {
     let total: number = 0;
     for (let i = 0; i < shopping_cart.length; i++) {
