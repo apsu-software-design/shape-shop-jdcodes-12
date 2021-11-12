@@ -9,14 +9,19 @@ export class ShopppingCartModel {
     }
 
     adddProductToCart(product: ProductModel) : void {
-
+        
     }
 
     removeProductFromCart(product: ProductModel) : void {
-
+        
+    }
+ 
+    getShoppingCart() {
+        return this.shoppingCart
     }
 
     clearCart() : void {
-    
+        
     }
+
 }

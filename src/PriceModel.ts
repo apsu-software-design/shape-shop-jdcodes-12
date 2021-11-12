@@ -14,8 +14,8 @@ export class PriceModel {
         this.total = 0.0
     }
     
-    calculateSubtotals(): void{
-
+    calculateSubtotals(): void {
+        
     }
 
     calculateTotal() : void {
@@ -30,7 +30,7 @@ export class PriceModel {
 
     }
 
-    resetTotal(): void {
+    resetTotal() : void {
         this.total = 0.0
     }
 
