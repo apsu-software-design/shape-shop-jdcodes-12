@@ -1,0 +1,6 @@
+export class PriceView {
+
+    displayPrice() {
+
+    }
+}
