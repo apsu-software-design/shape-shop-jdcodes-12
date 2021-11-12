@@ -49,6 +49,9 @@ export class ProductCatalogModel {
         this.productCatalog.splice(0)
     }
 
+    getProductCatalog(): ProductModel[] {
+        return this.productCatalog
+    }
     private removeProduct(product: ProductModel) {
         this.productCatalog.forEach((value,index)=>{
             if(value==product) this.productCatalog.splice(index,1)})
