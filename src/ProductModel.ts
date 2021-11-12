@@ -1,69 +1,48 @@
-export class ProductModel {
-    
-    private name: string
-    private unitPrice: number
-    private description: string
-    private quantity : number
+import { stringify } from "querystring"
 
-    ProductModel(name: string, unitPrice: number, description: string){
+export class ProductModel {
+    private name : string 
+    private price : number 
+    private description : string 
+    private quantity : number 
+
+
+    ProductModel(name: string, price: number, description: string, quantity: number){
         this.name = name
-        this.unitPrice = unitPrice
+        this.price = price
         this.description = description
+        this.quantity = quantity
     }
 
-    /**
-     * Gets the product's current name
-     * 
-     * @returns product name
-     */
-    getProductName() : string { return this.name }
+    getName() : string {
+        return this.name
+    }
 
-    /**
-     * Gets the product's current unit price
-     * 
-     * @returns unit price
-     */
-    getProductUnitPrice() : number{ return this.unitPrice }
+    getPrice() : number {
+        return this.price
+    }
 
-    /**
-     * Gets the product's current item description
-     * 
-     * @returns description
-     */
-    getProductDescription() : string{ return this.description }
+    getDescription() : string {
+        return this.description
+    }
 
-    /**
-     * Gets the product's current quanitity 
-     * 
-     * @returns quantity
-     */
-    getProductQuanitity() : number { return this.quantity }
-
-    /**
-     * Set the product's current name to the new name
-     * 
-     * @param name - new name to give the product
-     */
-    setProductName(name: string) : void { this.name = name }
+    getQuantity() : number {
+        return this.quantity
+    }
     
-    /**
-     * Sets the product's current unit price to the new unit price
-     * 
-     * @param unitPrice - new unit price to give the product
-     */
-    setProductUnitPrice(unitPrice: number) : void{ this.unitPrice = unitPrice }
+    setName(name: string) : void{
+        this.name = name
+    }
 
-    /**
-     * Sets the products current description to the new description
-     * 
-     * @param description - new description to give the product
-     */
-    setProductDescription(description: string) : void { this.description = description }
+    setPrice(price: number) : void {
+        this.price = price
+    }
 
-    /**
-     * Sets the current quantity to the new quanitity 
-     * 
-     * @param quanity - new quanity to give the product
-     */
-    setProductQuantity(quanity: number) : void { this.quantity = quanity }
+    setDescription(description: string) : void {
+        this.description = description
+    }
+    
+    setQuantity(quantity: number) : void {
+        this.quantity = quantity
+    }
 }

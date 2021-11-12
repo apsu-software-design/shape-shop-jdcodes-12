@@ -1,12 +1,16 @@
 //User Interface for The Shopping Cart 
 //@author James Church
 
-import readlineSync = require('readline-sync'); //for easier repeated prompts
-
+import readlineSync = require('readline-sync') //for easier repeated prompts
+import { ShoppingCartModel } from './ShoppingCartModel'
+import { ShoppingCartView } from './ShoppingCartView'
+import { ProductModel } from './ProductModel'
+import { ProductView } from './ProductView'
 /**
  * Function to run the UI
  */
 export function start() {
+  
   showMainMenu();
 }
 
@@ -14,24 +18,26 @@ export function start() {
  * The main menu. Will show until the user exits
  */
 function showMainMenu() {
-  while(true){ //run until we exit
-    console.log(`Welcome to the Shape Store! We offer the best shapes! Pick an option:
-  1. Add an item to the cart.
-  2. Remove an item to the cart.
-  3. View the items in the cart.
-  4. View the price of all items.
-  5. Quit.`);
+  while(true){ 
+    console.log(`\nWelcome to the Shape Store! We offer the best shapes around! \n\n
+  :-------: Pick an option :-------:\n
+  [1] - Add item to shopping cart
+  [2] - Remove an item to the cart
+  [3] - View all items in cart 
+  [4] - Checkout
+  [5] - View shop's product catalog
+  [6] - Leave Store`)
 
     let response = readlineSync.question('> ')
     if(response === '5' || response.slice(0,2).toLowerCase() === ':q'){
-      break; //stop looping, thus leaving method
+      break; 
     }
 
-    switch(response) { //handle each response
-      case '1': //addItemToCart(); break;
-      case '2': //removeItemFromCart(); break;
-      case '3': //viewItemsInCart(); break;
-      case '4': //viewCartTotal(); break;
+    switch(response) { 
+      case '1': //Add item to shopping cart
+      case '2': //Remove item from shopping cart
+      case '3': //Display items in cart
+      case '4': //Display Product Cart
       default: console.log('Invalid option!');
     }
     console.log(''); //extra empty line for revisiting
