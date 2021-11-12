@@ -1,8 +1,9 @@
 import { ShopppingCartModel } from "./ShoppingCartModel";
 
 export class ShoppingCartView {
-    private shoppingCart : ShopppingCartModel
 
+    private shoppingCart : ShopppingCartModel
+    
     ShoppingCartView(shoppingCart : ShopppingCartModel) {
         this.shoppingCart = shoppingCart
     }
