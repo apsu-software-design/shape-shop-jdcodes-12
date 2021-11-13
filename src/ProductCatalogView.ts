@@ -3,7 +3,8 @@ export class ProductCatalogView {
 
     private productCatalog : ProductCatalogModel
     
-    ProductCatalogView(productCatalog: ProductCatalogModel ){
+    
+    constructor(productCatalog: ProductCatalogModel){
         this.productCatalog = productCatalog
     }
 

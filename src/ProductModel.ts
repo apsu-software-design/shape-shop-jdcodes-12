@@ -16,7 +16,7 @@ export class ProductModel {
      * @param description description of the product
      * @param quantity how many products to buy
      */
-    ProductModel(name: string, price: number, description: string | "", quantity: number | 1){
+    constructor(name: string = "", price: number = 0, description: string = "", quantity: number = 1){
         this.name = name
         this.price = price
         this.description = description

@@ -12,7 +12,7 @@ export class PriceView {
      * @param prices 
      * @param shoppingCart 
      */
-    PriceView(prices: PriceModel, shoppingCart: ShoppingCartModel){
+    constructor(prices: PriceModel, shoppingCart: ShoppingCartModel){
         this.prices = prices
         this.shoppingCart = shoppingCart
     }

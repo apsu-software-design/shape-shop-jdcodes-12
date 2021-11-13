@@ -13,7 +13,7 @@ export class PriceModel {
      * 
      * @param shoppingCart a shopping cart to manipulate
      */
-    PriceModel(shoppingCart: ShoppingCartModel) {
+    constructor(shoppingCart: ShoppingCartModel) {
         this.shoppingCart = shoppingCart
         this.subtotals = []
         this.total = 0.0

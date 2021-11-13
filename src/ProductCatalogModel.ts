@@ -4,10 +4,17 @@ export class ProductCatalogModel {
     private productCatalog : ProductModel[]
 
     /**
-     * Initialize a new empty product catalog
+     * Initialize a new product catalog with 3 shapes:
+     * Square   - 3.5
+     * Circle   - 4.5
+     * Triangle - 5.5 - 
      */
-    ProductCatalogModel(){
+    constructor(){
+    
         this.productCatalog = []
+        this.productCatalog.push(new ProductModel('Square', 3.5, 'Three Sided Glory'))
+        this.productCatalog.push(new ProductModel('Circle', 4.5, 'Well-rounded!'))
+        this.productCatalog.push(new ProductModel('Triangle', 5.5, ''))
     }
 
     /**
@@ -24,7 +31,7 @@ export class ProductCatalogModel {
      * 
      * @param product product to remove from catalog
      */
-    removeProductFromCatalog(product: ProductModel) : void {
+    removeProductFromCatalog(product : ProductModel) : void {
         this.removeProductHelper(product)
     }   
     
@@ -68,7 +75,7 @@ export class ProductCatalogModel {
      */
     updateProductDescriptionInCatalog(product: ProductModel, newDescription : string) : void{
         let productToFind = product.getName().toLowerCase()
-        for(let i=0; i < this.ProductCatalogModel.length; i++){
+        for(let i=0; i < this.productCatalog.length; i++){
             if(this.productCatalog[i].getName().toLowerCase() === productToFind){
 
                 this.productCatalog[i].setDescription(newDescription)
