@@ -10,7 +10,13 @@ import { ProductCatalogModel } from './ProductCatalogModel'
 import { ProductCatalogView } from './ProductCatalogView'
 import { PriceModel } from './PriceModel'
 import { PriceView  } from './PriceView'
+import { clearScreenDown } from 'readline'
 
+let shoppingCartModel : ShoppingCartModel
+shoppingCartModel = new ShoppingCartModel()
+
+let productCatalogModel : ProductCatalogModel
+productCatalogModel = new ProductCatalogModel()
 
 /**
  * Function to run the UI.
@@ -25,7 +31,7 @@ export function start() {
  */
 function showMainMenu() {  
   while(true){ 
-    console.log(`----------`)
+    console.log('----------------------------------------')
     console.log(`\n
     Welcome to the Shape Store! 
     Where would you like to go? \n\n
@@ -40,7 +46,8 @@ function showMainMenu() {
     if(response.slice(0,2).toLowerCase() === ':q'){
       break; 
     }
-
+    console.log('');
+    
     switch(response) { 
       case '1':
           displayShoppingCartUI()
@@ -71,29 +78,28 @@ function showMainMenu() {
  */
  function displayShoppingCartUI(){
 
-  let shoppingCartModel : ShoppingCartModel
   let shoppingCartView : ShoppingCartView
 
-  shoppingCartModel = new ShoppingCartModel()
-
   while(true){ 
-    console.log(`----------`);
+    console.log(`----------------------------------------`)
     console.log(`\n
     Welcome to your Shopping Cart! 
     What would you like to do? \n\n
 
   :-------: Your Cart :-------:\n
-  [1] - Add an item to shopping cart
+  [1] - Add a shape to shopping cart
   [2] - Remove an item from shopping cart
   [3] - View current items in shopping cart
   [4] - Proceed to checkout 
-  [5] - Go back to home menu`)
+  [5] - Clear Cart
+  [6] - Go back to home menu`)
 
     let response = readlineSync.question('> ')
     if(response.slice(0,2).toLowerCase() === ':q'){
       break; 
     }
-
+    console.log('');
+    
     switch(response) { 
       case '1': 
           let product = promptForProductInfo()
@@ -105,7 +111,7 @@ function showMainMenu() {
           let productName = queryForProduct()
           let productToRemove = new ProductModel()
           for(let i=0; i < shoppingCartModel.getShoppingCart().length; i++){
-            if(shoppingCartModel.getShoppingCart()[i].getName() === productName){
+            if(shoppingCartModel.getShoppingCart()[i].getName().toLowerCase() == productName){
               productToRemove = shoppingCartModel.getShoppingCart()[i]
             }
           }
@@ -122,7 +128,11 @@ function showMainMenu() {
           displayCheckoutUI()
           break
 
-      case '5': 
+      case '5':
+          shoppingCartModel.clearCart()
+          break
+          
+      case '6': 
           showMainMenu()
           break
 
@@ -139,7 +149,7 @@ function showMainMenu() {
 function displayProductCatalogUI(){
 
   while(true){ 
-    console.log(`----------`);
+    console.log(`----------------------------------------`)
     console.log(`\n
     Welcome to our Product Catalog! 
     What would you like to do? \n\n
@@ -154,6 +164,8 @@ function displayProductCatalogUI(){
     if(response.slice(0,2).toLowerCase() === ':q'){
       break; 
     }
+    console.log('');
+    
 
     switch(response) { 
       case '1': 
@@ -175,7 +187,7 @@ function displayProductCatalogUI(){
  */
 function displayCheckoutUI(){
   while(true){ 
-    console.log(`----------`);
+    console.log(`----------------------------------------`)
     console.log(`\n
     Welcome to checkout! 
     What would you like to do? \n\n
@@ -189,7 +201,8 @@ function displayCheckoutUI(){
     if(response.slice(0,2).toLowerCase() === ':q'){
       break; 
     }
-
+    console.log('');
+    
     switch(response) { 
       case '1': 
       case '2': //Remove item from shopping cart
@@ -210,18 +223,42 @@ function displayCheckoutUI(){
  * @returns new ProductModel with name and price
  */
 function promptForProductInfo() : ProductModel {
-  console.log('Enter product information...')
-  console.log('Name: ')
-  let name = readlineSync.question('> ')
-  console.log(name);
-  console.log('Price: ')
-  let price = readlineSync.question('> ')
-  return new ProductModel(name, parseInt(price))
+  console.log('\nPick a shape to add...')
+  console.log('1) Triangle  - $3.50')
+  console.log('2) Square    - $4.50')
+  console.log('3) Pentagon  - $5.50')
+  let choice = readlineSync.question('> ')
+  let price = 0.0
+  let name = ""
+
+  switch(parseInt(choice)){
+    case 1:
+        price = 3.5
+        name = 'Triangle'
+        break
+          
+    case 2:
+        price = 4.5
+        name = 'Square'
+        break
+
+    case 3:
+        price = 5.50
+        name = "Pentagon"
+        break
+  }
+
+  return new ProductModel(name, price)
 }
 
+/**
+ * Helper function to query for product names -- used in remove functions
+ * 
+ * @returns product name to find
+ */
 function queryForProduct() : string {
     console.log('Enter a product to find: ')
     let productName = readlineSync.question(`> `)
-    return productName  
+    return productName.toLowerCase()
 }
 

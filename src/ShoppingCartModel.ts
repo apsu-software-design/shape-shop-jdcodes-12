@@ -26,8 +26,7 @@ export class ShoppingCartModel {
      * @param product the product to be removed
      */
     removeProductFromCart(product: ProductModel) : void {
-        
-        this.shoppingCart.forEach(this.removeProductHelper(product))
+        this.removeProductHelper(product)
     }
  
     /**
@@ -51,8 +50,10 @@ export class ShoppingCartModel {
      * 
      * @param product the product to remove
      */
-    private removeProductHelper(product: ProductModel) : any {
-            this.shoppingCart.forEach((value,index)=>{
-                if(value==product) this.shoppingCart.splice(index,1)})
+    private removeProductHelper(product: ProductModel) : void {
+            let productToRemove = product.getName().toLowerCase()
+
+           this.shoppingCart.forEach((value, index) => {
+           if(value.getName().toLowerCase() == productToRemove) this.shoppingCart.splice(index, 1)});
     }
 }
