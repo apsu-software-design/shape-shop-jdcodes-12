@@ -14,11 +14,11 @@ var ShoppingCartView = /** @class */ (function () {
      * Displays current cart information: Product name, Product Price, Quantity in Cart
      */
     ShoppingCartView.prototype.displayCurrentCartState = function () {
-        console.log("Current Items In Cart...");
+        console.log("\n=== Current Items In Cart ===");
         for (var i = 0; i < this.shoppingCart.getShoppingCart().length; i++) {
             console.log("Name: " + this.shoppingCart.getShoppingCart()[i].getName());
             console.log("Price: " + this.shoppingCart.getShoppingCart()[i].getPrice());
-            console.log("Quantity: " + this.shoppingCart.getShoppingCart()[i].getQuantity());
+            console.log("Quantity: " + this.shoppingCart.getShoppingCart()[i].getQuantity() + "\n");
         }
     };
     return ShoppingCartView;

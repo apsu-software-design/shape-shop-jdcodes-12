@@ -12,9 +12,9 @@ export class ProductCatalogModel {
     constructor(){
     
         this.productCatalog = []
-        this.productCatalog.push(new ProductModel('Square', 3.5, 'Three Sided Glory'))
-        this.productCatalog.push(new ProductModel('Circle', 4.5, 'Well-rounded!'))
-        this.productCatalog.push(new ProductModel('Triangle', 5.5, ''))
+        this.productCatalog.push(new ProductModel('Triangle', 3.5, 'Three Sided Glory!'))
+        this.productCatalog.push(new ProductModel('Square', 4.5, 'Four Square\'s Best Friend!'))
+        this.productCatalog.push(new ProductModel('Pentagon', 5.5, 'Penty, Penty, Gone!'))
     }
 
     /**
@@ -83,13 +83,7 @@ export class ProductCatalogModel {
         }
     }
 
-    /**
-     * Clears the entire product catalog
-     */
-    clearProductCatalog() : void {
-        this.productCatalog.splice(0)
-    }
-
+  
     /**
      * Returns the product catalog
      * 
@@ -106,7 +100,9 @@ export class ProductCatalogModel {
      * @param product the product to remove
      */
     private removeProductHelper(product: ProductModel) {
+        let productToRemove = product.getName().toLowerCase()
+
         this.productCatalog.forEach((value,index)=>{
-            if(value==product) this.productCatalog.splice(index,1)})
+            if(value.getName().toLowerCase() === productToRemove) this.productCatalog.splice(index,1)})
     }
 }

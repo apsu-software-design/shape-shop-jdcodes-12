@@ -1,12 +1,19 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductCatalogModel = void 0;
+var ProductModel_1 = require("./ProductModel");
 var ProductCatalogModel = /** @class */ (function () {
     /**
-     * Initialize a new empty product catalog
+     * Initialize a new product catalog with 3 shapes:
+     * Square   - 3.5
+     * Circle   - 4.5
+     * Triangle - 5.5 -
      */
     function ProductCatalogModel() {
         this.productCatalog = [];
+        this.productCatalog.push(new ProductModel_1.ProductModel('Triangle', 3.5, 'Three Sided Glory!'));
+        this.productCatalog.push(new ProductModel_1.ProductModel('Square', 4.5, 'Four Square\'s Best Friend!'));
+        this.productCatalog.push(new ProductModel_1.ProductModel('Pentagon', 5.5, 'Penty, Penty, Gone!'));
     }
     /**
      * Adds a product to the product catalog
@@ -67,12 +74,6 @@ var ProductCatalogModel = /** @class */ (function () {
         }
     };
     /**
-     * Clears the entire product catalog
-     */
-    ProductCatalogModel.prototype.clearProductCatalog = function () {
-        this.productCatalog.splice(0);
-    };
-    /**
      * Returns the product catalog
      *
      * @returns the current product catalog
@@ -88,8 +89,9 @@ var ProductCatalogModel = /** @class */ (function () {
      */
     ProductCatalogModel.prototype.removeProductHelper = function (product) {
         var _this = this;
+        var productToRemove = product.getName().toLowerCase();
         this.productCatalog.forEach(function (value, index) {
-            if (value == product)
+            if (value.getName().toLowerCase() === productToRemove)
                 _this.productCatalog.splice(index, 1);
         });
     };

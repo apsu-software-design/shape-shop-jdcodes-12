@@ -9,7 +9,7 @@ export class ProductCatalogView {
     }
 
     displayCurrentProductCatalogState() : void {
-        console.log('Shape Shops Current Product Catalog...')
+        console.log('=== Shape Shops Current Product Catalog ===')
         this.displayCatalogContents(this.productCatalog)
     }
 
@@ -17,7 +17,7 @@ export class ProductCatalogView {
         for(let i = 0; i < this.productCatalog.getProductCatalog().length; i++){
             console.log(`Name: ${this.productCatalog.getProductCatalog()[i].getName()}`)
             console.log(`Price: ${this.productCatalog.getProductCatalog()[i].getPrice()}`);
-            console.log(`Description:\n ${this.productCatalog.getProductCatalog()[i].getDescription()}`);            
+            console.log(`Description: ${this.productCatalog.getProductCatalog()[i].getDescription()}\n`);            
         }
     }
     

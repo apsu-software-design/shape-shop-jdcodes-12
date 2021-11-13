@@ -13,12 +13,6 @@ var PriceModel = /** @class */ (function () {
         this.total = 0.0;
     }
     /**
-     * Calculates the subtotals of all products in the cart
-     */
-    PriceModel.prototype.calculateSubtotals = function () {
-        this.shoppingCart.getShoppingCart().forEach(this.calcSubtotalHelper(this.shoppingCart));
-    };
-    /**
      * Calculates the total for a shopping cart
      */
     PriceModel.prototype.calculateTotal = function () {
@@ -77,41 +71,12 @@ var PriceModel = /** @class */ (function () {
     PriceModel.prototype.getTotal = function () {
         return this.total;
     };
-    /**
-     * Gets the subtotal of a passed product
-     *
-     * @param product product to find
-     */
-    PriceModel.prototype.getAProductSubtotal = function (product) {
-    };
-    /**
-     * private helper method to calculate subtotals. Used in calcSubtotals()
-     *
-     * @param shoppingCart the shopping cart to operate on
-     */
-    PriceModel.prototype.calcSubtotalHelper = function (shoppingCart) {
-        if (this.subtotals.length !== 0) {
-            this.subtotals.splice(0);
+    PriceModel.prototype.calculateSubtotals = function (shoppingCartModel) {
+        for (var i = 0; i < shoppingCartModel.getShoppingCart().length; i++) {
+            this.subtotals.push(shoppingCartModel.getShoppingCart()[i].getPrice() *
+                shoppingCartModel.getShoppingCart()[i].getQuantity());
         }
-        else {
-            for (var i = 0; i < shoppingCart.getShoppingCart().length; i++) {
-                var sub = (shoppingCart.getShoppingCart()[i].getPrice() *
-                    shoppingCart.getShoppingCart()[i].getQuantity());
-                this.subtotals.push(sub);
-            }
-        }
-    };
-    PriceModel.prototype.getAProductSubTotal = function () {
-        //Loop through, get total
     };
     return PriceModel;
 }());
 exports.PriceModel = PriceModel;
-/*
-    TODO
-        -> priavte getAProductSubTotal()
-            find product in cart
-            return its subtotal
-
-        ->
-*/ 

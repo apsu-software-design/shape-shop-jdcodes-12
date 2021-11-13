@@ -18,9 +18,18 @@ export class PriceView {
     }
 
     /**
+     * Displays the subtotals of all items in the cart
+     */
+    displaySubtotals() : void{
+        console.log('=== Subtotals Per Product ===\n')
+        this.displaySubTotals()
+        
+        
+    }
+    /**
      * Displays the total of the cart
      */
-    displayTotalPrice() {
+    displayTotalPrice() : void {
         this.prices.calculateTotal();
         console.log(`Shopping Cart Total: ${this.prices.getTotal()}`);
     }   
@@ -28,18 +37,11 @@ export class PriceView {
     /**
      * Displays the subtotals of the cart
      */
-    private displaySubTotals(){
+    private displaySubTotals() : void {
         for(let i=0; i < this.prices.getSubtotal().length; i++){
             console.log(`Product: ${this.shoppingCart.getShoppingCart()[i].getName()}`)
             console.log(`Quantity: ${this.shoppingCart.getShoppingCart()[i].getQuantity()}`)
-            console.log(`Subtotal: ${this.prices.calculateSubtotals()}`); 
+            console.log(`Subtotal: ${this.prices.getSubtotal()[i]}\n`); 
         }
     }
 }
-
-/*
-    TODO 
-        -> private displaySubTotals() --- Should return the subtotals of an item
-        -> displaySubtotals() --- creat the public method
-
-*/

@@ -22,7 +22,7 @@ var ShoppingCartModel = /** @class */ (function () {
      * @param product the product to be removed
      */
     ShoppingCartModel.prototype.removeProductFromCart = function (product) {
-        this.shoppingCart.forEach(this.removeProductHelper(product));
+        this.removeProductHelper(product);
     };
     /**
      * Returns the shopping cart
@@ -45,8 +45,9 @@ var ShoppingCartModel = /** @class */ (function () {
      */
     ShoppingCartModel.prototype.removeProductHelper = function (product) {
         var _this = this;
+        var productToRemove = product.getName().toLowerCase();
         this.shoppingCart.forEach(function (value, index) {
-            if (value == product)
+            if (value.getName().toLowerCase() == productToRemove)
                 _this.shoppingCart.splice(index, 1);
         });
     };

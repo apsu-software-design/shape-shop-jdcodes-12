@@ -7,6 +7,7 @@ export class PriceModel {
     private shoppingCart : ShoppingCartModel
     private subtotals : number[]
     private total : number 
+    private productSubtotals : number
 
     /**
      * Initialize a new PriceModel to a current shopping cart
@@ -19,12 +20,7 @@ export class PriceModel {
         this.total = 0.0
     }
     
-    /**
-     * Calculates the subtotals of all products in the cart
-     */
-    calculateSubtotals(): void {
-        this.shoppingCart.getShoppingCart().forEach(this.calcSubtotalHelper(this.shoppingCart))
-    }
+  
 
     /**
      * Calculates the total for a shopping cart
@@ -89,48 +85,10 @@ export class PriceModel {
         return this.total;
     }
 
-    /**
-     * Gets the subtotal of a passed product 
-     * 
-     * @param product product to find
-     */
-    getAProductSubtotal(product: ProductModel)  {
-
-    }
-
-    /**
-     * private helper method to calculate subtotals. Used in calcSubtotals()
-     * 
-     * @param shoppingCart the shopping cart to operate on
-     */
-    private calcSubtotalHelper(shoppingCart: ShoppingCartModel) : any {
-        
-        if(this.subtotals.length !== 0){
-            this.subtotals.splice(0)
+    calculateSubtotals(shoppingCartModel: ShoppingCartModel) : void {
+        for(let i=0; i < shoppingCartModel.getShoppingCart().length; i++){
+           this.subtotals.push(shoppingCartModel.getShoppingCart()[i].getPrice() *
+            shoppingCartModel.getShoppingCart()[i].getQuantity())
         }
-        else{
-            for(let i=0; i < shoppingCart.getShoppingCart().length; i++){
-                let sub = (shoppingCart.getShoppingCart()[i].getPrice() * 
-                                shoppingCart.getShoppingCart()[i].getQuantity())
-            
-                this.subtotals.push(sub)
-            }
-        }   
     }
-
-
-    private getAProductSubTotal() {
-        //Loop through, get total
-    }
-    
-
 }
-
-/*
-    TODO 
-        -> priavte getAProductSubTotal()
-            find product in cart
-            return its subtotal
-
-        ->
-*/

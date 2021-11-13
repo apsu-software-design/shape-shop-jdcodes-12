@@ -5,12 +5,12 @@ import readlineSync = require('readline-sync') //for easier repeated prompts
 import { ShoppingCartModel } from './ShoppingCartModel'
 import { ShoppingCartView } from './ShoppingCartView'
 import { ProductModel } from './ProductModel'
-import { ProductView } from './ProductView'
 import { ProductCatalogModel } from './ProductCatalogModel'
 import { ProductCatalogView } from './ProductCatalogView'
 import { PriceModel } from './PriceModel'
 import { PriceView  } from './PriceView'
 import { clearScreenDown } from 'readline'
+import { read } from 'fs'
 
 let shoppingCartModel : ShoppingCartModel
 shoppingCartModel = new ShoppingCartModel()
@@ -102,7 +102,7 @@ function showMainMenu() {
     
     switch(response) { 
       case '1': 
-          let product = promptForProductInfo()
+          let product = promptForProductInfoForCart()
           shoppingCartModel.addProductToCart(product)
           console.log("Product added!")
           break
@@ -148,6 +148,8 @@ function showMainMenu() {
  */
 function displayProductCatalogUI(){
 
+  let productCatalogView : ProductCatalogView
+
   while(true){ 
     console.log(`----------------------------------------`)
     console.log(`\n
@@ -158,7 +160,8 @@ function displayProductCatalogUI(){
   [1] - Add an item to product catalog
   [2] - Remove an item from product catalog
   [3] - View current products in catalog
-  [4] - Go back to home menu`)
+  [4] - Go to your cart
+  [5] - Go back to home menu`)
 
     let response = readlineSync.question('> ')
     if(response.slice(0,2).toLowerCase() === ':q'){
@@ -168,10 +171,33 @@ function displayProductCatalogUI(){
     
 
     switch(response) { 
-      case '1': 
-      case '2': //Remove item from shopping cart
-      case '3': //Display items in cart
-      case '4': //Display Product Cart
+      case '1':
+          let product = promptForProductInfoForCatalog()
+          productCatalogModel.addProductToCatalog(product)
+          console.log('Product added to catalog!');
+          break
+
+      case '2':
+          let productName = queryForProduct()
+          let productToRemove = new ProductModel()
+          for(let i=0; i < productCatalogModel.getProductCatalog().length; i++){
+            if(productCatalogModel.getProductCatalog()[i].getName().toLowerCase() == productName){
+              productToRemove = productCatalogModel.getProductCatalog()[i]
+            }
+          }
+          productCatalogModel.removeProductFromCatalog(productToRemove)
+          console.log("Product removed from catalog!")
+          break
+
+      case '3':
+          productCatalogView = new ProductCatalogView(productCatalogModel)
+          productCatalogView.displayCurrentProductCatalogState()
+          break
+          
+      case '4':
+          displayShoppingCartUI()
+          break
+
       case '5': 
           showMainMenu()
           break
@@ -186,6 +212,10 @@ function displayProductCatalogUI(){
  * Display the Checkout UI for customers
  */
 function displayCheckoutUI(){
+
+  let priceView : PriceView
+  let priceModel : PriceModel
+
   while(true){ 
     console.log(`----------------------------------------`)
     console.log(`\n
@@ -195,7 +225,9 @@ function displayCheckoutUI(){
   :-------: Checkout :-------:\n
   [1] - View cart subtotals per product
   [2] - Get cart total
-  [3] - Go back to home menu`)
+  [3] - Reset subtotals
+  [4] - Reset total
+  [5] - Go back to home menu`)
 
     let response = readlineSync.question('> ')
     if(response.slice(0,2).toLowerCase() === ':q'){
@@ -203,26 +235,59 @@ function displayCheckoutUI(){
     }
     console.log('');
     
+
+    //Menu Options 3 & 4 do not work properly -- totals & subtotals don't reset
     switch(response) { 
       case '1': 
-      case '2': //Remove item from shopping cart
+        priceModel = new PriceModel(shoppingCartModel)
+        priceModel.calculateSubtotals(shoppingCartModel);
+        priceView = new PriceView(priceModel, shoppingCartModel)
+        priceView.displaySubtotals()
+        break
+
+      case '2':
+        priceModel = new PriceModel(shoppingCartModel)
+        priceModel.clearSubtotals()
+        priceModel.calculateSubtotals(shoppingCartModel)
+        priceModel.calculateTotal()
+        priceModel.resetTotal()
+        priceView = new PriceView(priceModel, shoppingCartModel)
+        priceView.displaySubtotals()
+        priceView.displayTotalPrice()
+        break
+
       case '3':
-          showMainMenu()
-          break
+        priceModel = new PriceModel(shoppingCartModel)
+        priceModel.clearSubtotals()
+        console.log('Subtotals cleared!');
+        break;
+
+      case '4':
+        priceModel = new PriceModel(shoppingCartModel)
+        priceModel.resetTotal()
+        console.log('Total reset!');
+        break
+
+      case '5':
+        showMainMenu()
+        break
+
       default: console.log('Invalid option!');
     }
-    console.log(''); //extra empty line for revisiting
+
+    console.log(''); 
   }
+
 }
 
 /**
- * Helper function to get a product's name and price.
+ * Helper function to get a product's name and price, used for shopping cart
  * Description default to ""
  * Quantity default to 1
  * 
  * @returns new ProductModel with name and price
  */
-function promptForProductInfo() : ProductModel {
+function promptForProductInfoForCart() : ProductModel {
   console.log('\nPick a shape to add...')
   console.log('1) Triangle  - $3.50')
   console.log('2) Square    - $4.50')
@@ -260,5 +325,17 @@ function queryForProduct() : string {
     console.log('Enter a product to find: ')
     let productName = readlineSync.question(`> `)
     return productName.toLowerCase()
+}
+
+function promptForProductInfoForCatalog() : ProductModel {
+  console.log('\nEnter shape details...')
+  console.log('Shape name: ')
+  let shapeName = readlineSync.question('> ')
+  console.log('Shape Price: ')
+  let shapePrice = readlineSync.question('> ')
+  console.log('Shape Description: ')
+  let shapeDescription = readlineSync.question('> ')
+  
+  return new ProductModel(shapeName, parseInt(shapePrice), shapeDescription)
 }
 
