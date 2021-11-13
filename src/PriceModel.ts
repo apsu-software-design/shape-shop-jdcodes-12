@@ -1,28 +1,46 @@
 import { timingSafeEqual } from "crypto";
 import { ProductModel } from "./ProductModel";
-import { ShopppingCartModel } from "./ShoppingCartModel";
+import { ShoppingCartModel } from "./ShoppingCartModel";
 
 export class PriceModel {
 
-    private shoppingCart : ShopppingCartModel
+    private shoppingCart : ShoppingCartModel
     private subtotals : number[]
     private total : number 
 
-    PriceModel(shoppingCart: ShopppingCartModel) {
+    /**
+     * Initialize a new PriceModel to a current shopping cart
+     * 
+     * @param shoppingCart a shopping cart to manipulate
+     */
+    PriceModel(shoppingCart: ShoppingCartModel) {
         this.shoppingCart = shoppingCart
         this.subtotals = []
         this.total = 0.0
     }
     
+    /**
+     * Calculates the subtotals of all products in the cart
+     */
     calculateSubtotals(): void {
-        this.shoppingCart.getShoppingCart().forEach(this.calcAllSubtotals(this.shoppingCart))
+        this.shoppingCart.getShoppingCart().forEach(this.calcSubtotalHelper(this.shoppingCart))
     }
 
+    /**
+     * Calculates the total for a shopping cart
+     */
     calculateTotal() : void {
         this.subtotals.forEach((subtotal) => this.total += subtotal)
     }
 
-    //Inefficient
+    /**
+     * Adjust the subtotal for a product
+     * 
+     * @param product 
+     * @param productUnitPrice 
+     * @param quantityBuying 
+     */
+    /*
     adjustSubtotal(product: ProductModel, productUnitPrice: number, quantityBuying: number) : void {
         let productToFind = product.getName().toLowerCase()
         for(let i=0; i < this.shoppingCart.getShoppingCart().length; i++){
@@ -37,16 +55,55 @@ export class PriceModel {
             }
         }
     }
+    */
     
+    /**
+     * Clears the subtotals, defaults all to 0.0
+     */
     clearSubtotals() : void {
         this.subtotals.forEach((subtotal)=> this.total = 0.0)
     }
 
+    /**
+     * Resets the total of this PriceModel. Total set to 0.0
+     */
     resetTotal() : void {
         this.total = 0.0
     }
 
-    private calcAllSubtotals(shoppingCart: ShopppingCartModel) : any {
+    /**
+     * Returns the subtotals of all products in the cart
+     * 
+     * @returns cart subtotals
+     */
+    getSubtotal() : number[] {
+        return this.subtotals
+    }
+
+    /**
+     * Returns the total of the shopping cart
+     * 
+     * @returns the total of cart
+     */
+    getTotal(){
+        return this.total;
+    }
+
+    /**
+     * Gets the subtotal of a passed product 
+     * 
+     * @param product product to find
+     */
+    getAProductSubtotal(product: ProductModel)  {
+
+    }
+
+    /**
+     * private helper method to calculate subtotals. Used in calcSubtotals()
+     * 
+     * @param shoppingCart the shopping cart to operate on
+     */
+    private calcSubtotalHelper(shoppingCart: ShoppingCartModel) : any {
         
         if(this.subtotals.length !== 0){
             this.subtotals.splice(0)
@@ -61,4 +118,19 @@ export class PriceModel {
         }   
     }
 
+
+    private getAProductSubTotal() {
+        //Loop through, get total
+    }
+    
+
 }
+
+/*
+    TODO 
+        -> priavte getAProductSubTotal()
+            find product in cart
+            return its subtotal
+
+        ->
+*/
